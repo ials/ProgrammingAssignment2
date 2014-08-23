@@ -1,15 +1,44 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Programming Assignment 2: Lexical Scoping
 
-## Write a short comment describing this function
+## This work is based on the  code from the R programming course ## "Example: Caching the Mean of a Vector"
+
+## As matrix inversion is a costly computation, it is           ## advantageous to caching the inverse of a matrix rather      ## than compute it again and again. 
+## 
+## The following pair of functions cache the inverse of a      ## matrix. 
+
+
+## The function makeCacheMatrix creates a special "matrix"     ## object that can cache its inverse. This function actually    ## returns a list containing a function to: 
+## 1-set the value of the matrix
+## 2-get the value of the matrix
+## 3-set the value of the inverse
+## 4-get the value of the inverse
 
 makeCacheMatrix <- function(x = matrix()) {
-
+	m <- NULL
+     set <- function(y) {
+            x <<- y
+            m <<- NULL
+     }
+     get <- function() x
+     setmatrix <- function(solve) m <<- solve
+     getmatrix <- function() m
+     list(set = set, get = get,
+          setmatrix = setmatrix,
+          getmatrix = getmatrix)
 }
 
 
-## Write a short comment describing this function
+## The function cacheSolve computes the inverse of the special ## "matrix" returned by makeCacheMatrix above.
+## If the inverse has already been calculated, then the        ## cacheSolve retrieves the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        m <- x$getmatrix()
+        if(!is.null(m)) {
+                message("getting cached inverse matrix")
+                return(m)
+        }
+        matrix <- x$get()
+        m <- solve(matrix, ...)
+        x$setmatrix(m)
+        m
 }
