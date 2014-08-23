@@ -10,7 +10,7 @@
 
 
 ## The function makeCacheMatrix creates a special "matrix" object that can cache its inverse. This function actually
-returns a list containing a function to: 
+## returns a list containing a function to: 
 ## 1-set the value of the matrix
 ## 2-get the value of the matrix
 ## 3-set the value of the inverse
